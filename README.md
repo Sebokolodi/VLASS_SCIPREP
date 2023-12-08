@@ -41,5 +41,14 @@ appears. Since the VLASS images overlap to some extend at the edges, a source ca
 
 
 
+## Pending: To dos
+
+1. Write a sript that replaces missing spectral windows with channels containing nans. This should be incorporated before converting to frequency cubes,
+   so that the header information is correct (at this point, jumps in frequency due to missing SPW results in inaccurate frequency range).
+2. To include a portion inside vlass_cutout_3D that considers overlaps when the requested cutout size extents into another subtile. In which case, the user
+   has the option to request mosaicking.
+3.  
+
+
 
 
