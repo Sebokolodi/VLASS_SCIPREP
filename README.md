@@ -9,7 +9,7 @@ Scripts to use for VLASS (polarization) science pre-processing pipeline. The ava
   3. vlass_cutout_3D.py: Creates cutouts for both the mfs and cubes.
 
 
-## Dependancies:
+## Dependancies
 1. CASA: needed for conv_align and stokes_freq_cube. See installation options here: https://casadocs.readthedocs.io/en/v6.2.0/notebooks/usingcasa.html.
 2. Montage: needed for vlass_cutout_3D.
 3. Astropy: needed for stokes_freq_cube and vlass_cutout_3D scripts.
@@ -19,3 +19,27 @@ Scripts to use for VLASS (polarization) science pre-processing pipeline. The ava
 Note: Running astropy inside CASA is not as straightforward esp when using full installation version of CASA.
 You can install astropy inside CASA by following: https://stackoverflow.com/questions/52289107/installation-of-astropy-in-casa (install pip) and
 https://astropy-cjhang.readthedocs.io/en/latest/install.html (install astropy).
+
+## Cutout Script
+The cutout script takes as input the source ra and dec [in degrees] of interest, the epoch e.g. 1, 2, or 3, and cutout size in arcmins. You need
+to also specify a path to directory with fits files to cut into small chuncks, and path to directory to store both the cutout images and mosaic image (if requested).
+
+Though not user to specify, the script requires Subtile information. This is store inside the folder subtile_catalogs. Each epoch (including both halves)
+has its own subtile information and is obtained from the CIRADA continuum group. The idea is that we will store all the subtiles csv files inside
+this folder and access them when we call the script. At the moment (7th of December), we only have info about epoch 1 and 2.  The stored 
+csv filename should take the format 
+    
+     CIRADA_VLASS2Q*_subtile.csv
+    
+where 2 can be replaced by 1, 2, or 3. So far we do not have epoch 3. 
+
+This subtile csv file contain important parameters such as crval1, crval2, latpole,
+lonpole, bmaj, bmin, and bpa used for generating the images. We use this information to generate template headers for each subtile. Other information that 
+we use that aren't available inside the subtile csv file include: the naxis and cdelt1/2. These are confirmed to be the same for all of the VLASS image data. 
+So are fixed into the code. With the template header, we are able to determine the boundaries of the images, and thus, determine which subtile a source of interest 
+appears. Since the VLASS images overlap to some extend at the edges, a source can appear in more than one subtile.
+
+
+
+
+
