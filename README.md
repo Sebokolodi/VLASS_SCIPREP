@@ -11,10 +11,10 @@ Scripts to use for VLASS (polarization) science pre-processing pipeline. The ava
 
 ## Dependancies:
 1. CASA: needed for conv_align and stokes_freq_cube. See installation options here: https://casadocs.readthedocs.io/en/v6.2.0/notebooks/usingcasa.html.
-2. Montage: needed vlass_cutout_3D.
-3. Astropy
-4. Pandas
-5. Reproject
+2. Montage: needed for vlass_cutout_3D.
+3. Astropy: needed for stokes_freq_cube and vlass_cutout_3D scripts.
+4. Pandas: needed for vlass_cutout_3D.
+5. Reproject: needed for vlass_cutout_3D.
    
 Note: Running astropy inside CASA is not as straightforward esp when using full installation version of CASA.
 You can install astropy inside CASA by following: https://stackoverflow.com/questions/52289107/installation-of-astropy-in-casa (install pip) and
