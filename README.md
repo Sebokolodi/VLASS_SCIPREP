@@ -22,7 +22,8 @@ https://astropy-cjhang.readthedocs.io/en/latest/install.html (install astropy).
 
 ## Cutout Script
 The cutout script takes as input the source ra and dec [in degrees] of interest, the epoch e.g. 1, 2, or 3, and cutout size in arcmins. You need
-to also specify a path to directory with fits files to cut into small chuncks, and path to directory to store both the cutout images and mosaic image (if requested).
+to also specify a path to directory with fits files to cut into small chuncks, and path to directory to store both the cutout images and mosaic image (if requested). 
+Lastly, you can specify whether you want to mosaic.
 
 Though not user to specify, the script requires Subtile information. This is store inside the folder subtile_catalogs. Each epoch (including both halves)
 has its own subtile information and is obtained from the CIRADA continuum group. The idea is that we will store all the subtiles csv files inside
