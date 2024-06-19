@@ -35,8 +35,7 @@ The subtile CSV file contains crucial parameters like crval1, crval2, latpole, l
 This information allows us to create template headers for each subtile, eliminating the need to download images to retrieve this info. 
 Additional info not in the subtile CSV include naxis and cdelt1/2, are consistent across all VLASS image data and are fixed in the code. 
 With the template header, we can determine the image boundaries and identify sources belonging to a subtile. Also, the VLASS images overlap at the edges, 
-as such, some sources appear in more than one subtile. For the latter, there is a mosaic option to put together subtiles overlapping at a source location 
-(yet to be implemented). 
+as such, some sources appear in more than one subtile. For the latter, there is a mosaic option to put together subtiles overlapping at a source location. 
 
 
 
@@ -44,7 +43,7 @@ as such, some sources appear in more than one subtile. For the latter, there is 
 
 1. Write a sript that replaces missing spectral windows with channels containing nans. This should be incorporated before converting to frequency cubes,
    so that the header information is correct (at this point, jumps in frequency due to missing SPW results in inaccurate frequency range).
-2. Option to mosaic overlapping subtiles.
+2. Option to mosaic overlapping subtiles: completed and tested for MFS, but still do for cubes.
 3. Put together the different pre-processing pieces into one contained pipeline. Note: The final pre-processing pipeline will depend of whether the VLASS team implements other steps.
 4. Creat a cutout tool for 3D cube data: as a script to run on any terminal as well as web-like version.
    
