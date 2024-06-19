@@ -43,7 +43,7 @@ as such, some sources appear in more than one subtile. For the latter, there is 
 
 1. Write a sript that replaces missing spectral windows with channels containing nans. This should be incorporated before converting to frequency cubes,
    so that the header information is correct (at this point, jumps in frequency due to missing SPW results in inaccurate frequency range).
-2. Option to mosaic overlapping subtiles: completed and tested for MFS, but still do for cubes.
+2. Option to mosaic overlapping subtiles: completed and tested for MFS, but still test for cubes.
 3. Put together the different pre-processing pieces into one contained pipeline. Note: The final pre-processing pipeline will depend of whether the VLASS team implements other steps.
 4. Creat a cutout tool for 3D cube data: as a script to run on any terminal as well as web-like version.
    
