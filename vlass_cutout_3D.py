@@ -490,33 +490,55 @@ def cutout_image(source_overlap_subtiles, cutout_size, fits_indir,
     cutouts = []
     for i in range(len(subtile)):
     
+        print(fits_indir)
         fitsimage = glob.glob(fits_indir + 'VLASS%s*%s.%s*.fits'%(epoch, tile[i], subtile[i]))
+     
         if len(fitsimage) > 0:
-            hdu = fits.open(fitsimage[0])
-            position = SkyCoord(source_ra, source_dec, unit='deg')
+        
+            for img in fitsimage:
+                print(img)
+                hdu = fits.open(img)
+                position = SkyCoord(source_ra, source_dec, unit='deg')
             
-            if source_dec < 0:
-                source_pos = '%s%s'%(source_ra, source_dec)
-            if source_dec > 0:
-                source_pos = '%s+%s'%(source_ra, source_dec)
+                if source_dec < 0:
+                    source_pos = '%s%s'%(source_ra, source_dec)
+                if source_dec > 0:
+                    source_pos = '%s+%s'%(source_ra, source_dec)
             
-            trimmed = trim_tile(tile_hdu=hdu, position=position, cutout_size=cutout_size)
-            cutouts.append(trimmed) 
+                trimmed = trim_tile(tile_hdu=hdu, position=position, cutout_size=cutout_size)
+                cutouts.append(trimmed) 
             
-            # Define Stokes parameters. We do this in order to determine
-            # whether the input image is Stokes I, Q, U and V.
-            stokes = trimmed.header['CDELT4'] 
-            if int(stokes) == 1:
-                stokesid = "i"
-            elif int(stokes) == 2:
-                stokesid = "q"
-            elif int(stokes) == 3:
-                stokesid = "u"
-            elif int(stokes) == 4:
-                stokesid = "v" 
+                # Define Stokes parameters. We do this in order to determine
+                # whether the input image is Stokes I, Q, U and V.
+               
+                if trimmed.header['CTYPE4'] == "STOKES":
+                    stokes = trimmed.header['CRVAL4'] 
+                    print(trimmed.header['CRVAL4'])
+                    if int(stokes) == 1:
+                        stokesid = "i"
+                    elif int(stokes) == 2:
+                        stokesid = "q"
+                    elif int(stokes) == 3:
+                        stokesid = "u"
+                    elif int(stokes) == 4:
+                        stokesid = "v" 
+
+                elif trimmed.header['CTYPE3'] == "STOKES":
+                    stokes = trimmed.header['CRVAL3'] 
+                    print(trimmed.header['CRVAL3'])
+                    if int(stokes) == 1:
+                        stokesid = "i"
+                    elif int(stokes) == 2:
+                        stokesid = "q"
+                    elif int(stokes) == 3:
+                        stokesid = "u"
+                    elif int(stokes) == 4:
+                        stokesid = "v"  
+                        
+                print(stokesid)  
             
-            # Store cutouts to outdir. These are saved automatically.
-            fits.writeto('%s/vlass_cutout%s_%s_%s_%s_%s.fits'%(cutout_outdir, epoch, tile[i], 
+                # Store cutouts to outdir. These are saved automatically.
+                fits.writeto('%s/vlass_cutout%s_%s_%s_%s_%s.fits'%(cutout_outdir, epoch, tile[i], 
                     subtile[i], source_pos, stokesid), trimmed.data, trimmed.header, overwrite=True)  
         else:
             print('>>>>> Image/cube tile ID %s and subtile ID %s is not '\
