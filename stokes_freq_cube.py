@@ -24,7 +24,6 @@ spectral window, the cube has Stokes I, Q and U.
 This script uses CASA packages.
 """
 
-imlist = glob.glob('J005000-023000/VLASS2.1.cc.T10t02.J005000-023000.06.2048.v1.spw*.IQU.iter3.image.pbcor.tt0.subim.conv.regrid.fits')
 
 def order_images_freq(imlist):
     """Order input cubes by increasing frequencies.
@@ -99,17 +98,17 @@ def convert_to_freqCubes(imlist, outfile):
     freqs = concatenate_images(imlist, outfile=outfile) 
     
     print('>>> Splitting mega cube image into Stokes I, Q and U.')
-    imsubimage(imagename=outfile, outfile=outfile + '_i', stokes='I')
-    imsubimage(imagename=outfile, outfile=outfile + '_q', stokes='Q')
-    imsubimage(imagename=outfile, outfile=outfile + '_u', stokes='U')
+    imsubimage(imagename=outfile, outfile=outfile + '.i', stokes='I')
+    imsubimage(imagename=outfile, outfile=outfile + '.q', stokes='Q')
+    imsubimage(imagename=outfile, outfile=outfile + '.u', stokes='U')
     
     #check if there are complete number of channels, if some are missing, 
     #replace them with nans.
     
     
-    exportfits(outfile + '_i', outfile + '_i.fits')
-    exportfits(outfile + '_q', outfile + '_q.fits')
-    exportfits(outfile + '_u', outfile + '_u.fits')
+    exportfits(outfile + '.i', outfile + '.i.fits')
+    exportfits(outfile + '.q', outfile + '.q.fits')
+    exportfits(outfile + '.u', outfile + '.u.fits')
     
     #print('>> Adding frequency list to the header extension 1.')
     #add_freq_hdr(outfile + '_i.fits', freqs)
@@ -121,6 +120,17 @@ def convert_to_freqCubes(imlist, outfile):
     # Alternatively is to add the frequency info as a comment/history. 
     
 
+tile = 'T10t35'
+path_to_tile = '/home/lerato/vlass/cubes/%s/'%tile
+#subtiles = ['J005000-023000', 'J005800-013000','J010200-013000' ,'J010201-033000', 'J011001-023000',  'J011800-003000']
+#subtiles = ['J184200-033000']
+#subtiles = ['J204600-023000', 'J210201-033000']
+subtiles = ['J224959-003000', 'J225400-013000','J230600-003000']
+
+for subtile in subtiles:
     
-convert_to_freqCubes(imlist, outfile='image_test')   
+
+    imlist = glob.glob(path_to_tile + subtile + '/conv/' + '*tt0.subim.conv.regrid.fits')
+    outname = path_to_tile + subtile + '/conv/' + 'VLASS2.1.cc.%s.%s.06.2048.v1'%(tile, subtile)
+    convert_to_freqCubes(imlist, outfile=outname)   
 

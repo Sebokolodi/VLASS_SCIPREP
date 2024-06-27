@@ -73,7 +73,7 @@ def align_images(image, outregrid):
     sub = 'Uncorrected CRVAL' # get uncorrected crvlist
     crvlist = [s for s in hist if sub in s]
     
-    # there are situations where the image way already be realigned. 
+    # there are situations where the image way already realigned. 
     # so the crvlist will be empty.
     if bool(crvlist):
         print('Running a regriding to the corrected pointing centre.')
