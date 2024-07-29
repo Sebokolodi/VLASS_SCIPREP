@@ -32,8 +32,6 @@ from astropy import units as u
 from astropy.io import fits
 from astropy.wcs import WCS
 from astropy.nddata.utils import Cutout2D
-import montage_wrapper as montage
-from MontagePy.main import mAddCube, mViewer
 import tempfile
 import os, sys 
 import shutil, io
@@ -546,6 +544,8 @@ def cutout_image(source_overlap_subtiles, cutout_size, fits_indir,
             #sys.exit()
             
     if do_mosaic:
+        import montage_wrapper as montage
+        from MontagePy.main import mAddCube, mViewer
         if source_dec < 0:
             source_pos = '%s%s'%(source_ra, source_dec)
         if source_dec > 0:
